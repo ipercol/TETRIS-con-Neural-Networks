@@ -2,6 +2,7 @@ import pygame
 import random
 import sys
 
+
 # Inicializar Pygame
 pygame.init()
 
@@ -140,9 +141,9 @@ def game_over_screen(score):
         pygame.display.update()
 
 # Función principal del juego
-def main():
+def main(GLabel):
     start_screen()
-    pygame.time.wait(1000)
+    pygame.time.wait(100)
 
     # Contador antes de comenzar el juego
     for i in range(3, 0, -1):
@@ -161,7 +162,7 @@ def main():
     text_rect = text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
     screen.blit(text, text_rect)
     pygame.display.update()
-    pygame.time.wait(1000)
+    pygame.time.wait(10)
 
     board = create_board()
     piece = new_piece()
@@ -172,35 +173,18 @@ def main():
     game_over = False
     score = 0
 
+    
+
     while not game_over:
+
         screen.fill((255, 255, 255))
 
         fall_time += clock.get_rawtime()
         clock.tick()
 
-        # Manejar eventos de teclado
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                game_over = True
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
-                    piece.x -= 1
-                    if not valid_space(board, piece):
-                        piece.x += 1
-                elif event.key == pygame.K_RIGHT:
-                    piece.x += 1
-                    if not valid_space(board, piece):
-                        piece.x -= 1
-                elif event.key == pygame.K_DOWN:
-                    piece.y += 1
-                    if not valid_space(board, piece):
-                        piece.y -= 1
-                elif event.key == pygame.K_UP:
-                    # Rotar la pieza
-                    piece_shape = piece.shape[:]
-                    piece.shape = [list(row) for row in zip(*piece_shape[::-1])]
-                    if not valid_space(board, piece):
-                        piece.shape = piece_shape
+        #####################
+        #AQUI VAN LAS TECLAS#
+        #####################
 
         # Mover la pieza hacia abajo
         if fall_time / 1000 >= fall_speed:
@@ -243,5 +227,7 @@ def main():
     # Llamar a la función game_over_screen con la puntuación final
     game_over_screen(score)
 
+
 if __name__ == "__main__":
     main()
+    
